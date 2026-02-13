@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This is for You</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{
+height:100vh;overflow:hidden;
+background:linear-gradient(135deg,#ffd6e8,#ffeef6,#ffd6e8);
+}
+#app{width:100%;height:100%;position:relative}
+.screen{
+position:absolute;inset:0;
+display:flex;align-items:center;justify-content:center;
+flex-direction:column;text-align:center;
+opacity:0;transform:scale(1.05);
+transition:.7s ease;
+}
+.screen.active{opacity:1;transform:scale(1)}
+.glass{
+background:rgba(255,255,255,.25);
+backdrop-filter:blur(12px);
+border-radius:18px;
+padding:28px;width:85%;
+box-shadow:0 20px 40px rgba(0,0,0,.15)
+}
+h1{font-size:28px;color:#ff2e6d}
+h2{font-size:22px;color:#333;margin-top:8px}
+p{color:#444;margin-top:10px}
+.tap{margin-top:20px;color:#ff2e6d;font-weight:600}
+.hearts span{
+position:absolute;animation:fall 6s linear infinite;
+font-size:22px;opacity:.8
+}
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+.mem img{
+width:70%;border-radius:16px;
+box-shadow:0 15px 30px rgba(0,0,0,.2)
+}
+.count{font-size:26px;color:#ff2e6d;margin-top:10px}
+.final{font-size:26px;color:#ff2e6d}
+</style>
+</head>
+<body>
+<audio id="music" src="titanic.mp3" loop></audio>
+
+<div id="app">
+<!-- 1 -->
+<div class="screen active">
+<div class="glass">
+<h1>Happy Valentine’s Day</h1>
+<h2>Geetu</h2>
+<p>My heart beats only for you 💖</p>
+<div class="tap">Tap to Unlock Your Surprise</div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="screen">
+<div class="hearts">
+<span>💗</span><span>💞</span><span>💕</span><span>💘</span>
+</div>
+<h2>Nahi Nahi<br>Nahi Na Na 💕</h2>
+<div class="tap">Tap</div>
+</div>
+
+<!-- Memories -->
+<div class="screen mem"><img src="p1.jpg"><div class="tap">Tap</div></div>
+<div class="screen mem"><img src="p2.jpg"><div class="tap">Tap</div></div>
+<div class="screen mem"><img src="p3.jpg"><div class="tap">Tap</div></div>
+<div class="screen mem"><img src="p4.jpg"><div class="tap">Tap</div></div>
+<div class="screen mem"><img src="p5.jpg"><div class="tap">Tap</div></div>
+<div class="screen mem"><img src="p6.jpg"><div class="tap">Tap</div></div>
+
+<!-- Letter -->
+<div class="screen">
+<div class="glass">
+<h2>My Dearest 💌</h2>
+<p>Open when you miss me…  
+You are my favorite place to be.</p>
+<div class="tap">Tap</div>
+</div>
+</div>
+
+<!-- Countdown -->
+<div class="screen">
+<h2>Will you be my Valentine? 🌹</h2>
+<div class="count" id="cd"></div>
+<div class="tap">Tap</div>
+</div>
+
+<!-- Final -->
+<div class="screen">
+<h2 class="final">This is for you ❤️</h2>
+<p>Forever & Always</p>
+</div>
+</div>
+
+<script>
+const screens=[...document.querySelectorAll('.screen')];
+let i=0;
+document.body.addEventListener('click',()=>{
+if(i==0)document.getElementById('music').play();
+screens[i].classList.remove('active');
+i=Math.min(i+1,screens.length-1);
+screens[i].classList.add('active');
+});
+const end=new Date().getTime()+3*24*60*60*1000;
+setInterval(()=>{
+let now=new Date().getTime();
+let d=end-now;
+let days=Math.floor(d/(1000*60*60*24));
+let hrs=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+let min=Math.floor((d%(1000*60*60))/(1000*60));
+let sec=Math.floor((d%(1000*60))/1000);
+document.getElementById('cd').innerText=
+`${days} Days : ${hrs} Hrs : ${min} Min : ${sec} Sec`;
+},1000);
+</script>
+</body>
+</html>
